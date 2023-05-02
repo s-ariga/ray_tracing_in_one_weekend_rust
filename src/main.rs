@@ -1,5 +1,8 @@
 /* Seiichi Ariga <seiichi.ariga@gmail.com> */
 /* Ray tracing in one weekend. https://raytracing.github.io/books/RayTracingInOneWeekend.html */
+use std::io::Write;
+use indicatif::ProgressBar;
+
 
 fn main() {
     // Image
@@ -10,7 +13,11 @@ fn main() {
     let header = format!("P3\n{} {}\n255\n", IMAGE_WIDTH, IMAGE_HEIGHT);
     println!("{}", header);
 
+    let bar = ProgressBar::new(IMAGE_HEIGHT as u64);
+    let _ = writeln!(&mut std::io::stderr(), "🖼レイトレーシング中!");
+
     for j in (0..IMAGE_HEIGHT).rev() {
+        bar.inc(1);
         for i in 0.. IMAGE_WIDTH {
             let r = i as f64 / (IMAGE_WIDTH-1) as f64;
             let g: f64 = j as f64 / (IMAGE_WIDTH-1) as f64;
@@ -24,4 +31,5 @@ fn main() {
             println!("{} {} {}", ir, ig, ib);
         }
     }
+    bar.finish();
 }
