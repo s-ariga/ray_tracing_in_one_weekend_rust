@@ -5,8 +5,9 @@
 use std::f64::sqrt;
 use std::ops::Pow;
 // 演算子のオーバーロード用trait
-use std::ops::{Add, Mul, Div};
+use std::ops::{Add, Sub, Mul, Div};
 
+#[derive(Debug, PartialEq)]
 pub struct Vec3 {
     v: [f64; 3],
 }
@@ -36,12 +37,40 @@ impl Add<Vec3> for Vec3 {
     }
 }
 
+impl Sub<Vec3> for Vec3 {
+    type Output = Vec3;
+
+    fn sub(self, other: Vec3) -> Vec3 {
+        Vec3 { 
+            v: [
+                self.v[0] - other.v[0],
+                self.v[1] - other.v[1], 
+                self.v[2] - other.v[2]
+            ],
+        }
+    }
+}
+
 impl Mul<f64> for Vec3 {
     type Output = Vec3;
 
     fn mul(self, t: f64) -> Vec3 {
         Vec3 {
             v: [self.v[0] * t, self.v[1] * t, self.v[2] * t],
+        }
+    }
+}
+
+impl Mul<Vec3> for Vec3 {
+    type Output = Vec3;
+
+    fn mul(self, other: Vec3) -> Vec3 {
+        Vec3 {
+            v: [
+                self.v[0] * other.v[0],
+                self.v[1] * other.v[1], 
+                self.v[2] * other.v[2]
+            ],
         }
     }
 }
