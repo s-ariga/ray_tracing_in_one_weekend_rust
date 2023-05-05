@@ -36,6 +36,7 @@ fn main() {
 
     // プログレスバーで進捗を表示
     let bar = ProgressBar::new(IMAGE_HEIGHT as u64);
+    // 現在、PPMはSTDOUTに出力するので、メッセージはSTDERRへ
     let _ = writeln!(&mut std::io::stderr(), "🖼レイトレーシング中!");
 
     for j in (0..IMAGE_HEIGHT).rev() {
